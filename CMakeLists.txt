@@ -61,8 +61,7 @@ endfunction(report_write)
 
 # retrieves git project infos setting the following variables:
 #
-# PACKAGE_BRANCH  current hg branch name
-# PACKAGE_COMMITS number of commits on the current branch
+# PACKAGE_BUILD_NUMBER number of commits since last tag
 function(git_info)
   # hg command from mercurial package under msys2 is a python2 script.
   # As execute_process on MSYS2/MinGW uses CMD.exe as command interpreter
@@ -73,31 +72,25 @@ function(git_info)
       COMMAND file ${GIT_EXECUTABLE}
       WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
       OUTPUT_STRIP_TRAILING_WHITESPACE
-      OUTPUT_VARIABLE hg_file_type
+      OUTPUT_VARIABLE git_file_type
     )
-    if ("${hg_file_type}" MATCHES "Python script")
+    if ("${git_file_type}" MATCHES "Python script")
       set(GIT_COMMAND python2 ${GIT_EXECUTABLE})
     endif()
   endif()
   execute_process(
-    COMMAND ${GIT_COMMAND} branch
+    COMMAND ${GIT_COMMAND} describe --tags --long
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_VARIABLE BRANCH
+    OUTPUT_VARIABLE VERSION_TAG
   )
-  string(REPLACE "* " "" BRANCH "${BRANCH}")
-  set(PACKAGE_BRANCH "${BRANCH}" PARENT_SCOPE)
-  dump_variable(
-    BRANCH 
-    PACKAGE_BRANCH
-  )
-  execute_process(
-    COMMAND ${GIT_COMMAND} rev-list --count ${BRANCH}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_VARIABLE PACKAGE_BUILD_NUMBER
-  )
+  string(REGEX REPLACE "^[a-zA-Z]*-[0-9]*.[0-9]*.[0-9]*-" "" PACKAGE_BUILD_NUMBER "${VERSION_TAG}")
+  string(REGEX REPLACE "-.*$" "" PACKAGE_BUILD_NUMBER "${PACKAGE_BUILD_NUMBER}")
   set(PACKAGE_BUILD_NUMBER "${PACKAGE_BUILD_NUMBER}" PARENT_SCOPE)
+  dump_variable(
+    VERSION_TAG
+    PACKAGE_BUILD_NUMBER
+  )
 endfunction(git_info)
 
 option(OPTION_PKG_DEBUGINFO "Build additional debug information package[s]")
