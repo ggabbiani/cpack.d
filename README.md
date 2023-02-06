@@ -1,5 +1,6 @@
-Introduction
-============
+# CPack.d dropin' directory
+
+## Introduction
 
 cpack.d is a dropin directory for cmake/cpack, decoupling os specific
 packaging rules from project code development.
@@ -10,14 +11,15 @@ is automatically configured during the usual cmake project building.
 The resulting CPack files will be available in the corresponding binary
 directory (postfixed with '*.cmake') and usable as cpack configs.
 
-`cpack --config <build root>/cpack.d/<config-name>.cmake`
+    cd «build root»
+    cpack --config cpack.d/«config-name.cmake»
 
-The existing templates will produce packages with:
+The existing templates will produce packages in «build root» with:
 
- * package names compliant with the target OS rules
- * build number equal to the number of commits on the current branch
- * stripped binaries
- * support for runtime, development and documentation components
+* package names compliant with the target OS rules
+* build number equal to the number of commits on the current branch
+* stripped binaries
+* support for runtime, development and documentation components
 
 The commons.cmake.in extracts CMake project specific attributes and prepare
 them to be used by the os specific package configs through the invocation of
@@ -27,8 +29,7 @@ Project specific settings, like the description summary, are fetched
 from an external directory passed during the invocation of the 'config_package'
 macro via the DATA argument.
 
-Build status report
-===================
+## Build status report
 
 If the CMake list PACKAGE_OPTIONS is filled with options names used in the
 project, their status will be reported in a file named:
@@ -94,8 +95,7 @@ will produce a report like the following:
     SIMAGE_USE_QT5=OFF
     SIMAGE_XWD_SUPPORT=OFF
 
-DWARF debuginfo
-===============
+## DWARF debuginfo
 
 The debuginfo support for Debian and RedHat systems is available through a
 CMake option __OPTION_PKG_DEBUGINFO__ that is disabled by default. When enabled
@@ -103,9 +103,8 @@ a new package will be produced conforming the conventions of the target distro.
 
 In order to use this feature:
 
-  * OPTION_PKG_DEBUGINFO must be enabled;
-  * CMake build mode must be __Debug__ or __RelWithDebInfo__ since source code
-    must be compiled with debug options turned on;
+* OPTION_PKG_DEBUGINFO must be enabled;
+* CMake build mode must be __Debug__ or __RelWithDebInfo__ since source code must be compiled with debug options turned on;
 
 When these condition are met, cpack will post-process the resulting binaries
 using an additional tool that essentially:
@@ -129,12 +128,12 @@ debuginfo package can be unistalled.
 
 Drawbacks:
 
-  * not optimal debugger sessions when code optimizations are enabled (as in
-    case of a RelWithDebInfo build);
-  * DWARF debuginfo are a modified copy of the original ones produced during
-    compilation, concretely altering the file path of the sources to their
-    install-time path. This means that install-time path of the sources __must
-    be not longer then the compile-time path__.
+* not optimal debugger sessions when code optimizations are enabled (as in
+  case of a RelWithDebInfo build);
+* DWARF debuginfo are a modified copy of the original ones produced during
+  compilation, concretely altering the file path of the sources to their
+  install-time path. This means that install-time path of the sources __must
+  be not longer then the compile-time path__.
 
 __Workaround in case of problems with the file path length__
 
