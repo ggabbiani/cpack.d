@@ -36,7 +36,7 @@ function(report_prepare)
   list(APPEND res ${REPORT_UNPARSED_ARGUMENTS})
   list(APPEND PACKAGE_OPTIONS ${res})
   set(PACKAGE_OPTIONS "${PACKAGE_OPTIONS}" PARENT_SCOPE)
-  cmake_print_variables(PACKAGE_OPTIONS)
+  # cmake_print_variables(PACKAGE_OPTIONS)
 endfunction(report_prepare)
 
 # this macro barely includes the cpack.d directory after having managed the argument passed.
