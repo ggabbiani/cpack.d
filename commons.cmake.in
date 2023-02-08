@@ -13,10 +13,13 @@ set(CPACK_PACKAGE_VERSION_MAJOR         "@PROJECT_VERSION_MAJOR@")
 set(CPACK_PACKAGE_VERSION_MINOR         "@PROJECT_VERSION_MINOR@")
 set(CPACK_PACKAGE_VERSION_PATCH         "@PROJECT_VERSION_PATCH@")
 set(CPACK_PACKAGE_VERSION               "@PROJECT_VERSION@")
-set(CPACK_RESOURCE_FILE_LICENSE         "@PROJECT_SOURCE_DIR@/COPYING")
-set(CPACK_RESOURCE_FILE_README          "@PROJECT_SOURCE_DIR@/README")
-set(CPACK_PACKAGE_CONTACT               "https://groups.google.com/forum/#!forum/coin3d-discuss")
-set(CPACK_PACKAGE_VENDOR                "Coin3D Team")
+set(CPACK_RESOURCE_FILE_LICENSE         "@CPACK_RESOURCE_FILE_LICENSE@")
+set(CPACK_RESOURCE_FILE_README          "@CPACK_RESOURCE_FILE_README@")
+set(CPACK_PACKAGE_CONTACT               "@CPACK_PACKAGE_CONTACT@")
+set(CPACK_PACKAGE_VENDOR                "@CPACK_PACKAGE_VENDOR@")
+
+if (NOT "@PROJECT_URL@" STREQ "")
+  set(PROJECT_URL "@PROJECT_URL@")
 
 ##############################################################################
 # CPACK base settings
@@ -34,9 +37,9 @@ set(CPACK_PACKAGE_VENDOR                "Coin3D Team")
 #   The string "%PROJECT_NAME%" is a placeholder for PROJECT_NAME variable,
 #   eligible to be changed to ${PROJECT_NAME}${PROJECT_VERSION_MAJOR}
 #   when HAVE_MULTIPLE_VERSION is set.
-# 
-# This macro manages all CPACK_* settings not OS specific. The  only exceptions 
-# are CPACK_GENERATOR and CPACK_PACKAGE_FILE_NAME that must be defined 
+#
+# This macro manages all CPACK_* settings not OS specific. The  only exceptions
+# are CPACK_GENERATOR and CPACK_PACKAGE_FILE_NAME that must be defined
 # elsewhere.
 macro(config_package)
   set(options LOWCASE)
@@ -52,10 +55,9 @@ macro(config_package)
   if (PKG_LOWCASE)
     string(TOLOWER "${CPACK_PACKAGE_NAME}" CPACK_PACKAGE_NAME)
   endif()
-  if (NOT PKG_DATA) 
+  if (NOT PKG_DATA)
     set(PKG_DATA "@PROJECT_SOURCE_DIR@/packaging")
   endif()
-  set(PROJECT_URL                         "https://bitbucket.org/Coin3D/@PROJECT_NAME@")
   set(CPACK_COMPONENT_DEVELOPMENT_DEPENDS "runtime")
   set(CPACK_PACKAGE_DESCRIPTION_FILE      "${PKG_DATA}/description-summary.txt")
   if (@OPTION_PKG_DEBUGINFO@)
