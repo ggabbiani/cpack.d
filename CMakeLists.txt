@@ -61,11 +61,11 @@ function(git_info)
   else()
     set(PACKAGE_BUILD_NUMBER 0 PARENT_SCOPE)
   endif()
-  cmake_print_variables(
-    CMAKE_MATCH_COUNT CMAKE_MATCH_1
-    VERSION_TAG
-    PACKAGE_BUILD_NUMBER
-  )
+  # cmake_print_variables(
+  #   CMAKE_MATCH_COUNT CMAKE_MATCH_1
+  #   VERSION_TAG
+  #   PACKAGE_BUILD_NUMBER
+  # )
 endfunction(git_info)
 
 # get all found components

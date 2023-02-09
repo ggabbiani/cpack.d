@@ -60,7 +60,7 @@ macro(cpack_d)
   set(oneValueArgs CONTACT LICENSE PATH README URL VENDOR)
   set(multiValueArgs REPORT REPORT_IF_APPLE REPORT_IF_LINUX REPORT_IF_WIN32)
   cmake_parse_arguments(CPACK_D "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN} )
-  cmake_print_variables(CPACK_D_REPORT CPACK_D_PATH PROJECT_DESCRIPTION CPACK_D_LICENSE)
+  # cmake_print_variables(CPACK_D_REPORT CPACK_D_PATH PROJECT_DESCRIPTION CPACK_D_LICENSE)
   report_prepare(
     ${CPACK_D_REPORT}
     IF_APPLE "${CPACK_D_REPORT_IF_APPLE}"
