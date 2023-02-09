@@ -68,7 +68,8 @@ macro(cpack_d)
     IF_WIN32 "${CPACK_D_REPORT_IF_WIN32}"
   )
 
-  option(OPTION_PKG_DEBUGINFO "Build additional debug information package[s]")
+  option(OPTION_PKG_MULTIVERS "Allows install of multiple versions" OFF)
+  option(OPTION_PKG_DEBUGINFO "Build additional debug information package[s]" OFF)
   if (OPTION_PKG_DEBUGINFO AND NOT CMAKE_BUILD_TYPE STREQUAL Debug AND NOT CMAKE_BUILD_TYPE STREQUAL RelWithDebInfo)
     message(WARNING "OPTION_PKG_DEBUGINFO is ON but required debug info could be missing in '${CMAKE_BUILD_TYPE}' builds")
   endif()

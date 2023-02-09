@@ -18,9 +18,8 @@ set(CPACK_RESOURCE_FILE_README          "@CPACK_RESOURCE_FILE_README@")
 set(CPACK_PACKAGE_CONTACT               "@CPACK_PACKAGE_CONTACT@")
 set(CPACK_PACKAGE_VENDOR                "@CPACK_PACKAGE_VENDOR@")
 
-if (NOT "@PROJECT_URL@" STREQ "")
-  set(PROJECT_URL "@PROJECT_URL@")
-
+set(OPTION_PKG_MULTIVERS             @OPTION_PKG_MULTIVERS@)
+set(PROJECT_URL                         "@PROJECT_URL@")
 ##############################################################################
 # CPACK base settings
 #
@@ -36,7 +35,7 @@ if (NOT "@PROJECT_URL@" STREQ "")
 #   value for CPACK_PACKAGE_NAME, default is "%PROJECT_NAME%".
 #   The string "%PROJECT_NAME%" is a placeholder for PROJECT_NAME variable,
 #   eligible to be changed to ${PROJECT_NAME}${PROJECT_VERSION_MAJOR}
-#   when HAVE_MULTIPLE_VERSION is set.
+#   when OPTION_PKG_MULTIVERS is set.
 #
 # This macro manages all CPACK_* settings not OS specific. The  only exceptions
 # are CPACK_GENERATOR and CPACK_PACKAGE_FILE_NAME that must be defined
@@ -48,7 +47,7 @@ macro(config_package)
   if (NOT PKG_NAME)
     set(PKG_NAME "%PROJECT_NAME%")
   endif()
-  if (@HAVE_MULTIPLE_VERSION@)
+  if (OPTION_PKG_MULTIVERS)
     set(PKG_NAME "${PKG_NAME}@PROJECT_VERSION_MAJOR@")
   endif()
   string(REPLACE "%PROJECT_NAME%" "@PROJECT_NAME@" CPACK_PACKAGE_NAME "${PKG_NAME}")

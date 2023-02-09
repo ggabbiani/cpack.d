@@ -6,9 +6,9 @@
 # https://www.debian.org/doc/debian-policy/#document-ch-controlfields (5.6.12. Version)
 # NOT tested with lintian (https://packages.debian.org/it/sid/lintian)
 #
-# NOTE: CMake/CPack versions < v3.6 do not provide a DEB generator able to 
-# manage package component filenames correctly. 
-# In such a situation there will be a mismatch between the component PACKAGE 
+# NOTE: CMake/CPack versions < v3.6 do not provide a DEB generator able to
+# manage package component filenames correctly.
+# In such a situation there will be a mismatch between the component PACKAGE
 # NAME and the  corresponding component PACKAGE FILE NAME.
 #
 # Example for DEVELOPMENT component:

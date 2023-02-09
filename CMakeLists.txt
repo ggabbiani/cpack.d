@@ -18,7 +18,11 @@ function(report_write)
   list(SORT res)
   set(report_name "build-options.txt")
   file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${report_name} CONTENT "$<JOIN:${res},\n>")
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${report_name} DESTINATION "${CMAKE_INSTALL_INFODIR}/${PROJECT_NAME}${PROJECT_VERSION_MAJOR}" COMPONENT runtime)
+  install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${report_name}
+    DESTINATION "${CMAKE_INSTALL_INFODIR}/${PROJECT_NAME}${PROJECT_VERSION_MAJOR}"
+    COMPONENT runtime
+  )
 endfunction(report_write)
 
 # retrieves git project infos setting the following variables:

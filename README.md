@@ -9,10 +9,10 @@ Every CPack template file (postfixed with '*.cmake.in') in the directory,
 is automatically configured during the usual cmake project building.
 
 The resulting CPack files will be available in the corresponding binary
-directory (postfixed with '*.cmake') and usable as cpack configs.
+directory (postfixed with '*.cpack') and usable as cpack configs.
 
     cd «build root»
-    cpack --config cpack.d/«config-name.cmake»
+    cpack --config cpack.d/«config-name.cpack»
 
 The existing templates will produce packages in «build root» with:
 
