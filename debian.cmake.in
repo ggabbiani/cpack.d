@@ -15,7 +15,7 @@
 # package NAME      'libsimage-dev' (OK)
 # package FILE NAME 'libsimage-1.7.1a-690_amd64-development.deb' (WRONG)
 ##############################################################################
-include("@CMAKE_CURRENT_BINARY_DIR@/commons.cmake")
+include("@CMAKE_CURRENT_BINARY_DIR@/commons.cpack")
 
 config_package(NAME "lib%PROJECT_NAME%" LOWCASE)
 

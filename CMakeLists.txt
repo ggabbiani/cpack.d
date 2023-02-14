@@ -11,6 +11,7 @@ endif()
 function(report_write)
   list(APPEND res "CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
   list(APPEND res "OPTION_PKG_DEBUGINFO=${OPTION_PKG_DEBUGINFO}")
+  list(APPEND res "OPTION_PKG_MULTIVERS=${OPTION_PKG_MULTIVERS}")
   # cmake_print_variables(PACKAGE_OPTIONS)
   foreach(O IN LISTS PACKAGE_OPTIONS)
     list(APPEND res "${O}=${${O}}")
@@ -20,7 +21,7 @@ function(report_write)
   file(GENERATE OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${report_name} CONTENT "$<JOIN:${res},\n>")
   install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${report_name}
-    DESTINATION "${CMAKE_INSTALL_INFODIR}/${PROJECT_NAME}${PROJECT_VERSION_MAJOR}"
+    DESTINATION "${CMAKE_INSTALL_INFODIR}/${PROJECT_NAME}$<$<BOOL:${OPTION_PKG_MULTIVERS}>:${PROJECT_VERSION_MAJOR}>"
     COMPONENT runtime
   )
 endfunction(report_write)
@@ -78,10 +79,10 @@ get_cmake_property(PACKAGE_COMPONENTS_ALL COMPONENTS)
 find_program(GIT_EXECUTABLE NAMES git)
 if (GIT_EXECUTABLE)
   git_info()
-  message(STATUS "Git found at ${GIT_EXECUTABLE}, PACKAGE_BUILD_NUMBER set to ${PACKAGE_BUILD_NUMBER}")
+  # message(STATUS "Git found at ${GIT_EXECUTABLE}, PACKAGE_BUILD_NUMBER set to ${PACKAGE_BUILD_NUMBER}")
 else()
   set(PACKAGE_BUILD_NUMBER 1)
-  message(WARNING "Git not found, PACKAGE_BUILD_NUMBER set to ${PACKAGE_BUILD_NUMBER}")
+  message(AUTH_WARNING "Git not found, PACKAGE_BUILD_NUMBER set to ${PACKAGE_BUILD_NUMBER}")
 endif()
 
 file(GLOB CONFIGS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cmake.in)
