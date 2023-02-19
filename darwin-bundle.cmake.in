@@ -1,0 +1,25 @@
+##############################################################################
+# Unoffical CPACK configuration for Mac OS X systems
+# tested on Mac OS X 10.12 Sierra and 10.14 Mojave (64 bits)
+#
+##############################################################################
+include("@CMAKE_CURRENT_BINARY_DIR@/commons.cpack")
+
+set(CPACK_PACKAGING_INSTALL_PREFIX "@CMAKE_INSTALL_PREFIX@")
+
+#config_package(LOWCASE)
+config_package()
+
+set(CPACK_GENERATOR "Bundle")
+set(CPACK_BUNDLE_NAME "${CPACK_PACKAGE_NAME}")
+configure_file("@CMAKE_CURRENT_SOURCE_DIR@/Info.plist.in" "@CMAKE_CURRENT_BINARY_DIR@/Info.plist" @ONLY)
+set(CPACK_BUNDLE_PLIST "@CMAKE_CURRENT_BINARY_DIR@/Info.plist")
+set(CPACK_BUNDLE_ICON "@CMAKE_CURRENT_SOURCE_DIR@/coffee.icns")
+
+# There are no runtime components when installing MacOSX frameworks
+# so we need to disable this. The resources files need to have an
+# extension txt, rtf, html, ... so they must be copied to the binary
+# directory.  Welcome files are needed for GUI installers only (Windows, MacOSX, ...)
+set(CPACK_COMPONENT_DEVELOPMENT_DEPENDS)
+
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CPACK_SYSTEM_NAME}")

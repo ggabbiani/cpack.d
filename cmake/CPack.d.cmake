@@ -98,7 +98,13 @@ macro(cpackd)
     set(CPACK_PACKAGE_CONTACT "${arg_CONTACT}")
   endif()
 
+  # create the description file
   if (arg_DESCRIPTION)
+    set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_BINARY_DIR}/description.md")
+    file(WRITE "${CPACK_PACKAGE_DESCRIPTION_FILE}" "# ${PROJECT_NAME} Description\n\n")
+    foreach(line IN LISTS arg_DESCRIPTION)
+      file(APPEND "${CPACK_PACKAGE_DESCRIPTION_FILE}" "${line}\n")
+    endforeach()
     set(PKG_DESCRIPTION "${arg_DESCRIPTION}")
   endif()
 
